@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}Registrarse{% endblock %}
+
+{% block content %}
+<div class="card" style="max-width: 400px; margin: 4rem auto;">
+    <h2 style="margin-bottom: 1.5rem;">Crear Cuenta</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div style="margin-bottom: 1rem;">
+            <input type="email" name="email" placeholder="Email" required 
+                   style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 4px; font-size: 1rem;">
+        </div>
+        <div style="margin-bottom: 1rem;">
+            <input type="password" name="password1" placeholder="Contraseña" required 
+                   style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 4px; font-size: 1rem;">
+        </div>
+        <div style="margin-bottom: 1.5rem;">
+            <input type="password" name="password2" placeholder="Confirmar contraseña" required 
+                   style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 4px; font-size: 1rem;">
+        </div>
+        <button type="submit" class="btn" style="width: 100%; padding: 0.75rem; font-size: 1rem;">Registrarse</button>
+    </form>
+    <p style="margin-top: 1.5rem; text-align: center; color: #666;">
+        ¿Ya tienes cuenta? <a href="{% url 'account_login' %}" style="color: #000; font-weight: 500;">Ingresa</a>
+    </p>
+</div>
+{% endblock %}

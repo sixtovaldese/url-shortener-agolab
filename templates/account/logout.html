@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Salir{% endblock %}
+
+{% block content %}
+<div class="card" style="max-width: 400px; margin: 4rem auto; text-align: center;">
+    <h2 style="margin-bottom: 1.5rem;">¿Cerrar sesión?</h2>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn" style="width: 100%; padding: 0.75rem; font-size: 1rem;">Confirmar</button>
+    </form>
+    <p style="margin-top: 1.5rem;">
+        <a href="{% url 'shortener:home' %}" style="color: #666;">Cancelar</a>
+    </p>
+</div>
+{% endblock %}
