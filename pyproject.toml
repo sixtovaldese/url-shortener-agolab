@@ -1,0 +1,16 @@
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+exclude = [
+    "migrations",
+    "__pycache__",
+    "venv",
+]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I"]
+ignore = ["E501"]
+
+[tool.bandit]
+exclude_dirs = ["test_suite", "migrations"]
+skips = ["B308", "B703"]
