@@ -35,6 +35,8 @@ services:
       ANON_EXPIRY_DAYS: ${ANON_EXPIRY_DAYS}
       AUTH_EXPIRY_DAYS: ${AUTH_EXPIRY_DAYS}
       MIN_ALIAS_LENGTH: ${MIN_ALIAS_LENGTH}
+      DJANGO_SECURE_PROXY_SSL_HEADER: "HTTP_X_FORWARDED_PROTO,https"
+
     depends_on:
       - db
     labels:
