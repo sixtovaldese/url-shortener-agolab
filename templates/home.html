@@ -3,6 +3,75 @@
 {% block content %}
 <div class="card">
     <h1>Acorta tus URLs</h1>
-    <p>Sistema simple y rápido de acortamiento de enlaces.</p>
+    
+    {% if messages %}
+        {% for message in messages %}
+            <div style="padding: 1rem; margin: 1rem 0; background: {% if message.tags == 'error' %}#fee{% else %}#efe{% endif %}; border-radius: 4px;">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    
+    <form method="post" style="margin-top: 2rem;">
+        {% csrf_token %}
+        <div style="margin-bottom: 1rem;">
+            <input type="url" name="url" placeholder="https://ejemplo.com/url-muy-larga" required 
+                   style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 4px; font-size: 1rem;">
+        </div>
+        
+        {% if user.is_authenticated %}
+        <div style="margin-bottom: 1rem;">
+            <input type="text" name="alias" placeholder="Alias personalizado (opcional, mín. 8 caracteres)" 
+                   style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 4px; font-size: 1rem;">
+            <small style="color: #666; display: block; margin-top: 0.5rem;">Deja vacío para generar uno aleatorio</small>
+        </div>
+        {% endif %}
+        
+        <button type="submit" class="btn" style="width: 100%; padding: 0.75rem; font-size: 1rem;">Acortar URL</button>
+    </form>
 </div>
+
+{% if created_link %}
+<div class="card">
+    <h3>¡URL creada exitosamente!</h3>
+    <p style="margin: 1rem 0;">
+        <strong>URL corta:</strong><br>
+        <a href="{{ request.scheme }}://{{ request.get_host }}/{{ created_link.short_code }}/" target="_blank"
+           style="color: #0066cc; font-size: 1.2rem;">
+            {{ request.scheme }}://{{ request.get_host }}/{{ created_link.short_code }}/
+        </a>
+    </p>
+    <p style="color: #666;">Expira: {{ created_link.expires_at|date:"d/m/Y H:i" }}</p>
+</div>
+{% endif %}
+
+{% if user.is_authenticated and user_links %}
+<div class="card">
+    <h3>Tus enlaces recientes</h3>
+    <table style="width: 100%; border-collapse: collapse; margin-top: 1rem;">
+        <thead>
+            <tr style="border-bottom: 2px solid #ddd;">
+                <th style="text-align: left; padding: 0.5rem;">Código</th>
+                <th style="text-align: left; padding: 0.5rem;">URL Original</th>
+                <th style="text-align: center; padding: 0.5rem;">Clicks</th>
+                <th style="text-align: center; padding: 0.5rem;">Expira</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for link in user_links %}
+            <tr style="border-bottom: 1px solid #eee;">
+                <td style="padding: 0.5rem;">
+                    <a href="/{{ link.short_code }}/" target="_blank">{{ link.short_code }}</a>
+                </td>
+                <td style="padding: 0.5rem; max-width: 300px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                    {{ link.original_url }}
+                </td>
+                <td style="padding: 0.5rem; text-align: center;">{{ link.click_count }}</td>
+                <td style="padding: 0.5rem; text-align: center;">{{ link.expires_at|date:"d/m/y" }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
 {% endblock %}
