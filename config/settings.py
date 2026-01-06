@@ -120,3 +120,4 @@ MIN_ALIAS_LENGTH = config('MIN_ALIAS_LENGTH', default=8, cast=int)
 ACCOUNT_EMAIL_VERIFICATION = "none"
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 DEFAULT_FROM_EMAIL = "no-reply@urlshort.ago.cl"
+ 
