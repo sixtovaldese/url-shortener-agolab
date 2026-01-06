@@ -115,3 +115,8 @@ SESSION_COOKIE_SECURE = True
 ANON_EXPIRY_DAYS = config('ANON_EXPIRY_DAYS', default=30, cast=int)
 AUTH_EXPIRY_DAYS = config('AUTH_EXPIRY_DAYS', default=90, cast=int)
 MIN_ALIAS_LENGTH = config('MIN_ALIAS_LENGTH', default=8, cast=int)
+
+
+ACCOUNT_EMAIL_VERIFICATION = "none"
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+DEFAULT_FROM_EMAIL = "no-reply@urlshort.ago.cl"
